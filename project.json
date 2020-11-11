@@ -1,0 +1,8 @@
+{
+  "engine": "cocos-creator-js",
+  "packages": "packages",
+  "name": "rpg",
+  "id": "d3a26c01-9cfc-413b-a1b9-03a8d456923e",
+  "version": "2.4.2",
+  "isNew": false
+}
