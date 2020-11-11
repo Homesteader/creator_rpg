@@ -45,9 +45,9 @@ export default class MapLayer extends cc.Component {
 				bgNode.anchorY = 0;
 				this.bgImg = bgNode.addComponent(cc.Sprite);
 			}
-
+	
 			this.bgImg.spriteFrame = new cc.SpriteFrame(this._mapParams.bgTex);
-
+	
 			//如果是马赛克小地图，则需要把小地图缩放成原始地图一样大小
 			if(mapParams.mapLoadModel == MapLoadModel.slices)
 			{
@@ -131,6 +131,7 @@ export default class MapLayer extends cc.Component {
 
 		private getSliceSprite(name:string)
 		{
+			console.log("getSliceSprite:"+name)
 			var node:cc.Node = new cc.Node(name);
 			var sprite:cc.Sprite = node.addComponent(cc.Sprite);
 			node.anchorX = 0;

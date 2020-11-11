@@ -107,7 +107,8 @@ export default class SceneMap extends cc.Component {
         var dx:number = 0;
         var dy:number = 0;
 
-   
+        this._roadDic = {}
+
         for(var i:number = 0 ; i < len ; i++)
         {
             for(var j:number = 0 ; j < len2 ; j++)
@@ -134,9 +135,19 @@ export default class SceneMap extends cc.Component {
         this.node.width = this.mapLayer.width;
         this.node.height = this.mapLayer.height;
 
+        this.mapLayer.clear();
         this.setViewToPlayer();
 
     }
+
+    public initPlayerPos(px:number,py:number)
+    {
+        if(this.player)
+        {
+            this.player.setPosition(px,py);
+        }
+    }
+
 
     public getMapNodeByPixel(px:number,py:number):RoadNode
     {

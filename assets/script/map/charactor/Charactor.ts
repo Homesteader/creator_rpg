@@ -223,6 +223,12 @@ export default class Charactor extends cc.Component {
 
     }
 
+    public setPosition(px:number,py:number)
+    {
+        this.node.x = px;
+        this.node.y = py;
+    }
+
     /**
      * 根据路节点路径行走
      * @param roadNodeArr 
