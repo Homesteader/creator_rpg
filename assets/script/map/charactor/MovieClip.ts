@@ -46,6 +46,9 @@ export default class MovieClip extends cc.Component {
     @property({type:cc.Texture2D})
     public texture:cc.Texture2D = null;
 
+    @property(cc.Label)
+    public nameTx:cc.Label = null;
+
     /// <summary>
     /// 播放次数
     /// </summary>
@@ -105,7 +108,7 @@ export default class MovieClip extends cc.Component {
     /// <summary>
     /// 影片是否在跑动中
     /// </summary>
-    public running:boolean = true;
+    public running:boolean = false;
 
     //private _direction:number = 1;
 
@@ -126,7 +129,32 @@ export default class MovieClip extends cc.Component {
         //Texture2D tex = Resources.Load<Texture2D>("Image/Avatar/" + m_sprite_name);
 
         //this.begin = 0;
+        
+    }
 
+    public loadRes()
+    {
+        let bundle = cc.assetManager.getBundle('player');
+        if(bundle == null)
+        {
+            return;
+        }
+        bundle.load("player",cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
+        {
+            if(error)
+            {
+                this.nameTx.string = error.message;
+                return console.error(error);
+            }
+            this.texture = tex;
+            console.log("load texture success," + this.texture.width)
+            this.nameTx.string = "load texture success";
+            this.setClipParam()
+        });
+    }
+
+    private setClipParam()
+    {
         if(this.end == 0)
         {
             this.end = this.col;
@@ -154,7 +182,7 @@ export default class MovieClip extends cc.Component {
                 this._bitmapArr[i][j] = new cc.SpriteFrame(this.texture,new cc.Rect(j * this._pieceWidth,i * this._pieceHeight,this._pieceWidth, this._pieceHeight),false,cc.v2(0,0),new cc.Size(this._pieceWidth,this._pieceHeight));
             }
         }
-        
+        this.nameTx.string = "xxxxx";
         this.m_sprite.spriteFrame = this._bitmapArr[this.rowIndex][0];
 
         this.node.width = this._pieceWidth;
@@ -164,13 +192,11 @@ export default class MovieClip extends cc.Component {
         this.timer = 0;
 
         this.running = this.autoPlayOnLoad;
-
-
     }
 
     update(dt)
     {
-
+        
         if (!this.running)
             return;
 

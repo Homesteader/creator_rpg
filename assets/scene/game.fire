@@ -78,19 +78,19 @@
         "__id__": 21
       },
       {
-        "__id__": 28
+        "__id__": 29
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 30
-      },
-      {
         "__id__": 31
       },
       {
         "__id__": 32
+      },
+      {
+        "__id__": 33
       }
     ],
     "_prefab": null,
@@ -180,7 +180,7 @@
       "array": [
         0,
         0,
-        528.5867241879927,
+        407.9926867110095,
         0,
         0,
         0,
@@ -553,7 +553,7 @@
         "__id__": 12
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 19
@@ -658,8 +658,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        2,
+        2,
         1
       ]
     },
@@ -824,7 +824,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.25
+      "y": 0.5
     },
     "_trs": {
       "__type__": "TypedArray",
@@ -864,8 +864,9 @@
     },
     "_enabled": true,
     "interval": 0.1,
-    "texture": {
-      "__uuid__": "7742ee15-68c5-4d5d-97a3-6f923e0802e1"
+    "texture": null,
+    "nameTx": {
+      "__id__": 14
     },
     "playTimes": 0,
     "row": 5,
@@ -940,6 +941,9 @@
     "_components": [
       {
         "__id__": 27
+      },
+      {
+        "__id__": 28
       }
     ],
     "_prefab": null,
@@ -1297,6 +1301,33 @@
     "_id": "50iDCYjQ5KioUtz/g/Vd/B"
   },
   {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 21
+    },
+    "_enabled": true,
+    "alignMode": 1,
+    "_target": null,
+    "_alignFlags": 36,
+    "_left": 0,
+    "_right": 23.04499999999996,
+    "_top": 0,
+    "_bottom": 44.56999999999999,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 0,
+    "_originalHeight": 0,
+    "_id": "558f1QfR5La5zG3q0uh0BP"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "uiCamera",
     "_objFlags": 0,
@@ -1307,7 +1338,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 29
+        "__id__": 30
       }
     ],
     "_prefab": null,
@@ -1335,7 +1366,7 @@
       "array": [
         0,
         0,
-        528.5867241879927,
+        407.9926867110095,
         0,
         0,
         0,
@@ -1363,7 +1394,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 28
+      "__id__": 29
     },
     "_enabled": true,
     "_cullingMask": -2,

@@ -142,9 +142,11 @@ export default class SceneMap extends cc.Component {
 
     public initPlayerPos(px:number,py:number)
     {
+        this.entityLayer.node.active = true;        
         if(this.player)
         {
             this.player.setPosition(px,py);
+            this.player.movieClip.loadRes();
         }
     }
 

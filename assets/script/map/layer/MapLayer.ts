@@ -45,7 +45,7 @@ export default class MapLayer extends cc.Component {
 				bgNode.anchorY = 0;
 				this.bgImg = bgNode.addComponent(cc.Sprite);
 			}
-	
+			console.log("this._mapParams.bgTex "+this._mapParams.bgTex)
 			this.bgImg.spriteFrame = new cc.SpriteFrame(this._mapParams.bgTex);
 	
 			//如果是马赛克小地图，则需要把小地图缩放成原始地图一样大小
@@ -117,8 +117,11 @@ export default class MapLayer extends cc.Component {
 								bitmap.spriteFrame = new cc.SpriteFrame(tex);
 							}
 						});*/
-
-						cc.loader.loadRes("map/bg/" + this._mapParams.bgName + "/slices/" + key,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
+						
+						let bundle = cc.assetManager.getBundle(this._mapParams.bgName);
+						if(bundle == null)
+							return;
+						bundle.load("slices/" + key,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
 						{
 							bitmap.spriteFrame = new cc.SpriteFrame(tex);
 						});
@@ -131,7 +134,6 @@ export default class MapLayer extends cc.Component {
 
 		private getSliceSprite(name:string)
 		{
-			console.log("getSliceSprite:"+name)
 			var node:cc.Node = new cc.Node(name);
 			var sprite:cc.Sprite = node.addComponent(cc.Sprite);
 			node.anchorX = 0;
