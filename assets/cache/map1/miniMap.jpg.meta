@@ -9,7 +9,24 @@
   "packable": true,
   "width": 256,
   "height": 256,
-  "platformSettings": {},
+  "platformSettings": {
+    "web": {
+      "formats": [
+        {
+          "name": "jpg",
+          "quality": 80
+        }
+      ]
+    },
+    "minigame": {
+      "formats": [
+        {
+          "name": "jpg",
+          "quality": 80
+        }
+      ]
+    }
+  },
   "subMetas": {
     "miniMap": {
       "ver": "1.0.4",

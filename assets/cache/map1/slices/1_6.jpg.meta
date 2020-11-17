@@ -9,7 +9,20 @@
   "packable": true,
   "width": 256,
   "height": 256,
-  "platformSettings": {},
+  "platformSettings": {
+    "minigame": {
+      "formats": [
+        {
+          "name": "png",
+          "quality": 80
+        },
+        {
+          "name": "jpg",
+          "quality": 80
+        }
+      ]
+    }
+  },
   "subMetas": {
     "1_6": {
       "ver": "1.0.4",

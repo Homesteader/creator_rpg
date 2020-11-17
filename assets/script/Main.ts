@@ -102,7 +102,6 @@ export default class Main extends cc.Component {
         console.log("mapName " + mapName +", " + bundle)
         if(bundle == null)
         {
-            console.log("11111111111111111111111")
             cc.assetManager.loadBundle(mapName,(error:Error,buddle)=>{
                 if(error)
                 {
@@ -113,7 +112,6 @@ export default class Main extends cc.Component {
         }
         else
         {
-            console.log("222222222222222222")
             this.loadMapRes(mapName,bundle);
         }
     }
@@ -125,7 +123,7 @@ export default class Main extends cc.Component {
             return;
             
         console.log("this.map name: " + this.mapName + ",mapName:" + mapName);
-        var pos = mapName == "map1" ? cc.v2(50,138):cc.v2(920,190)
+        var pos = mapName == "map1" ? cc.v2(50,138):cc.v2(60,38)
         cc.loader.loadRes("map/data/" + mapName,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
         {
             var mapData:MapData = res.json;

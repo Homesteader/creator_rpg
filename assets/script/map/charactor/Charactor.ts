@@ -122,7 +122,7 @@ export default class Charactor extends cc.Component {
 
     public moving:boolean = false;
 
-    public moveSpeed:number = 200;
+    public moveSpeed:number = 100;
 
     private _moveAngle:number = 0;
 
