@@ -51,6 +51,13 @@ export default class Main extends cc.Component {
             }
         })
 
+        cc.assetManager.loadBundle('map2',(error:Error,buddle)=>{
+            if(error)
+            {
+               return console.error(error);
+            }
+        })
+
         cc.assetManager.loadBundle('map1',(error:Error,buddle)=>{
             if(error)
             {
