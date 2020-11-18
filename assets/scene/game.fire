@@ -869,8 +869,8 @@
       "__id__": 14
     },
     "playTimes": 0,
-    "row": 5,
-    "col": 24,
+    "row": 8,
+    "col": 8,
     "rowIndex": 0,
     "isAll": false,
     "autoPlayOnLoad": true,

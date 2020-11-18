@@ -42,6 +42,7 @@ export default class Charactor extends cc.Component {
         return this._movieClip;
     }
 
+    private rows:number[] = [0,4,1,6,3,7,2,5]  //下标代表方向，值是图片中的行数
 
     private _direction:number = 0;
 
@@ -54,15 +55,17 @@ export default class Charactor extends cc.Component {
     {
         this._direction = value;
 
-        if(value > 4)
-        {
-            this.movieClip.rowIndex = 4 - value % 4;
-            this.movieClip.node.scaleX = -1;
-        }else
-        {
-            this.movieClip.rowIndex = value;
-            this.movieClip.node.scaleX = 1;
-        }
+        // if(value > 4)
+        // {
+        //     this.movieClip.rowIndex = 4 - value % 4;
+        //     this.movieClip.node.scaleX = -1;
+        // }else
+        // {
+        //     this.movieClip.rowIndex = value;
+        //     this.movieClip.node.scaleX = 1;
+        // }
+
+        this.movieClip.rowIndex = this.rows[value]
     }
 
     private _state:CharactorState = 0;
@@ -76,30 +79,32 @@ export default class Charactor extends cc.Component {
     {
         this._state = value;
 
-        switch(this._state)
-        {
-            case CharactorState.stand: 
-                this.movieClip.begin = 0;
-                this.movieClip.end = 6;
-            break;
+        // 每行的列数
+        // switch(this._state)
+        // {
+        //     case CharactorState.stand: 
+        //         this.movieClip.begin = 0;
+        //         this.movieClip.end = 6;
+        //     break;
 
-            case CharactorState.run: 
-                this.movieClip.begin = 6;
-                this.movieClip.end = 12;
-            break;
+        //     case CharactorState.run: 
+        //         this.movieClip.begin = 6;
+        //         this.movieClip.end = 12;
+        //     break;
 
-            case CharactorState.sitdown: 
-                this.movieClip.begin = 12;
-                this.movieClip.end = 18;
-            break;
+        //     case CharactorState.sitdown: 
+        //         this.movieClip.begin = 12;
+        //         this.movieClip.end = 18;
+        //     break;
 
-            case CharactorState.sitdown_run: 
-                this.movieClip.begin = 18;
-                this.movieClip.end = 24;
-            break;
+        //     case CharactorState.sitdown_run: 
+        //         this.movieClip.begin = 18;
+        //         this.movieClip.end = 24;
+        //     break;
 
-        }
-
+        // }
+        this.movieClip.begin = 0;
+        this.movieClip.end = 7;
     }
 
     private _alpha: number = 1;
@@ -122,7 +127,7 @@ export default class Charactor extends cc.Component {
 
     public moving:boolean = false;
 
-    public moveSpeed:number = 110;
+    public moveSpeed:number = 130;
 
     private _moveAngle:number = 0;
 
@@ -159,6 +164,7 @@ export default class Charactor extends cc.Component {
 
                     var dire:number = Math.round((-this._moveAngle + Math.PI)/(Math.PI / 4));
                     this.direction = dire > 5 ? dire-6 : dire+2;
+                    console.log("dire: "+dire+" , "+this.direction)
                 }
 
                 var xspeed:number = Math.cos(this._moveAngle) * speed;
