@@ -40,12 +40,6 @@ export default class MovieClip extends cc.Component {
     @property(cc.Float)
     public interval:number = 0.1;
 
-    /// <summary>
-    /// 贴图文件名
-    /// </summary>
-    @property({type:cc.Texture2D})
-    public texture:cc.Texture2D = null;
-
     @property(cc.Label)
     public nameTx:cc.Label = null;
 
@@ -114,11 +108,6 @@ export default class MovieClip extends cc.Component {
 
     private _playIndex:number = 0;
 
-    private _pieceWidth:number = 0;
-
-    private _pieceHeight:number = 0;
-
-
     private _bitmapArr:cc.SpriteFrame[][] = [];
 
     // Use this for initialization
@@ -134,38 +123,44 @@ export default class MovieClip extends cc.Component {
 
     public loadRes()
     {
+   
         let bundle = cc.assetManager.getBundle('player');
         if(bundle == null)
         {
             return;
         }
-        bundle.load("player",cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
+        bundle.load("player",cc.SpriteAtlas,(err, atlas)=>
         {
-            if(error)
+            if(err)
             {
-                this.nameTx.string = error.message;
-                return console.error(error);
+                return console.error(err);
             }
-            this.texture = tex;
-            console.log("load texture success," + this.texture.width)
-            this.nameTx.string = "load texture success";
-            this.setClipParam()
+            
+            this.setClipParam(atlas)
         });
     }
 
-    private setClipParam()
+    private setClipParam(atlas)
     {
         if(this.end == 0)
         {
             this.end = this.col;
         }
 
+        for(var i = 0 ; i < this.row ; i++)
+            {
+                this._bitmapArr[i] = [];
+
+                for(var j = 0 ; j < this.col ; j++)
+                {
+                    var index = i*16 + j + 1
+                    var frame = atlas.getSpriteFrame(index.toString());
+                    this._bitmapArr[i][j] = frame
+                }
+            }
+
         this.rowIndex = this.clamp(this.rowIndex,0,this.row - 1);
 
-
-        this._pieceWidth = this.texture.width / this.col;
-        this._pieceHeight = this.texture.height / this.row;
-        
         this.m_sprite = this.getComponent(cc.Sprite);
 
         if(!this.m_sprite)
@@ -173,22 +168,9 @@ export default class MovieClip extends cc.Component {
             this.m_sprite = this.addComponent(cc.Sprite);
         }
 
-        for(var i = 0 ; i < this.row ; i++)
-        {
-            this._bitmapArr[i] = [];
-
-            for(var j = 0 ; j < this.col ; j++)
-            {
-                this._bitmapArr[i][j] = new cc.SpriteFrame(this.texture,new cc.Rect(j * this._pieceWidth,i * this._pieceHeight,this._pieceWidth, this._pieceHeight),false,cc.v2(0,0),new cc.Size(this._pieceWidth,this._pieceHeight));
-            }
-        }
         this.nameTx.string = "xxxxx";
         this.m_sprite.spriteFrame = this._bitmapArr[this.rowIndex][0];
-
-        this.node.width = this._pieceWidth;
-        this.node.height = this._pieceHeight;
-
-        //this.timer = this.interval;
+    
         this.timer = 0;
 
         this.running = this.autoPlayOnLoad;
