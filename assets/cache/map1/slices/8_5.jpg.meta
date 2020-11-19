@@ -8,21 +8,12 @@
   "genMipmaps": false,
   "packable": true,
   "width": 256,
-  "height": 128,
-  "platformSettings": {
-    "minigame": {
-      "formats": [
-        {
-          "name": "jpg",
-          "quality": 80
-        }
-      ]
-    }
-  },
+  "height": 256,
+  "platformSettings": {},
   "subMetas": {
     "8_5": {
       "ver": "1.0.4",
-      "uuid": "331fee49-c18a-4bbf-870d-f9967168e963",
+      "uuid": "c9fc69db-2f6b-4389-be3d-fc53ca6d8f40",
       "rawTextureUuid": "91ee1e98-9e5e-4cb4-9422-72df6630f1a0",
       "trimType": "auto",
       "trimThreshold": 1,
@@ -32,9 +23,9 @@
       "trimX": 0,
       "trimY": 0,
       "width": 256,
-      "height": 128,
+      "height": 256,
       "rawWidth": 256,
-      "rawHeight": 128,
+      "rawHeight": 256,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

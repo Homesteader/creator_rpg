@@ -50,21 +50,26 @@ export default class Main extends cc.Component {
                return console.error(error);
             }
         })
+        cc.assetManager.loadBundle('map1',(error:Error,buddle)=>{
+            if(error)
+            {
+                console.log(error.message)
+               return console.error(error);
+            }
+            console.log("load map1 ________________")
+            
+        })
 
         cc.assetManager.loadBundle('map2',(error:Error,buddle)=>{
             if(error)
             {
                return console.error(error);
             }
-        })
 
-        cc.assetManager.loadBundle('map1',(error:Error,buddle)=>{
-            if(error)
-            {
-               return console.error(error);
-            }
             this.loadSlicesMap();
         })
+
+        
     }
 
 
@@ -123,7 +128,7 @@ export default class Main extends cc.Component {
             return;
             
         console.log("this.map name: " + this.mapName + ",mapName:" + mapName);
-        var pos = mapName == "map1" ? cc.v2(50,138):cc.v2(60,38)
+        var pos = mapName == "map1" ? cc.v2(1747,51):cc.v2(60,38)
         cc.loader.loadRes("map/data/" + mapName,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
         {
             var mapData:MapData = res.json;

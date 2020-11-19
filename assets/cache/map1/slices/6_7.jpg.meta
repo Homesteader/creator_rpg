@@ -9,20 +9,11 @@
   "packable": true,
   "width": 256,
   "height": 256,
-  "platformSettings": {
-    "minigame": {
-      "formats": [
-        {
-          "name": "jpg",
-          "quality": 80
-        }
-      ]
-    }
-  },
+  "platformSettings": {},
   "subMetas": {
     "6_7": {
       "ver": "1.0.4",
-      "uuid": "5add7b8f-2308-41e8-b9b1-02c5eb54ddff",
+      "uuid": "48f85bbf-e9ca-4281-bc76-4f55716cbe1a",
       "rawTextureUuid": "d6733317-7880-4754-b802-baa365668a9e",
       "trimType": "auto",
       "trimThreshold": 1,
