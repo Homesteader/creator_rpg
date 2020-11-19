@@ -108,7 +108,7 @@ export default class Main extends cc.Component {
         var mapName:string =  this.mapName == 'map1' ? 'map2':'map1';
 
         let bundle = cc.assetManager.getBundle(mapName);
-        console.log("mapName " + mapName +", " + bundle)
+        console.log("loadSlicesMap mapName " + mapName +", " + this.mapName)
         if(bundle == null)
         {
             cc.assetManager.loadBundle(mapName,(error:Error,buddle)=>{
@@ -141,19 +141,20 @@ export default class Main extends cc.Component {
         cc.loader.loadRes("map/data/" + mapName,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
         {
             var mapData:MapData = res.json;
-            console.log("path: " + mapData.bgName + "/miniMap");
             bundle.load("miniMap",cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
             {
                 if(error)
                     return console.error(error);
-                console.log("load map success");
+                
                 this.mapName = mapName;
+                console.log("load map success:",mapName,this.mapName);
                 this.sceneMap.node.active = true;
                 this.sceneMap.init(mapData,tex,MapLoadModel.slices)
                 this.sceneMap.initPlayerPos(pos.x,pos.y,(posX,posY)=>{
-                    
-                   if (posX == transportPos.x && transportPos.y == posY)
-                    this.loadSlicesMap();
+
+                   var isSame = this.sceneMap.isSameNodeByPixel(cc.v2(posX,posY),transportPos)
+                   if (isSame)
+                    this.jumpMap();
                 });
                 
                 this.transportNode.setPosition(transportPos)
@@ -162,6 +163,7 @@ export default class Main extends cc.Component {
         });
     }
 
+    
     jumpMap(){
         this.loadSlicesMap();
     }

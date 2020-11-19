@@ -152,6 +152,14 @@ export default class SceneMap extends cc.Component {
         }
     }
 
+    public isSameNodeByPixel(pos: Vec2,targetPos: Vec2):boolean{
+
+        var point1:Point = MapRoadUtils.instance.getWorldPointByPixel(pos.x,pos.y);
+        var point2:Point = MapRoadUtils.instance.getWorldPointByPixel(targetPos.x,targetPos.y);
+
+        return point1.x == point2.x && point1.y == point2.y
+    }
+
 
     public getMapNodeByPixel(px:number,py:number):RoadNode
     {

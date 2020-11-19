@@ -180,6 +180,10 @@ export default class Charactor extends cc.Component {
                     this.node.y = nextNode.py
             
                     this.stop();
+                    if(this.arriveCallBack != null)
+                    {
+                        this.arriveCallBack(this.node.x,this.node.y)
+                    }
                 }else
                 {
                     this.walk();
@@ -267,9 +271,6 @@ export default class Charactor extends cc.Component {
     {
         this.moving = false;
         this.state = CharactorState.stand;
-        if(this.arriveCallBack != null)
-        {
-            this.arriveCallBack(this.node.x,this.node.y)
-        }
+        
     }
 }
