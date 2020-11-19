@@ -23,6 +23,9 @@ export default class Main extends cc.Component {
     @property(cc.Button)
     jumpBtn : cc.Button = null;
 
+    @property(cc.Node)
+    transportNode : cc.Node = null;
+
     private mapName:string = "";
     // LIFE-CYCLE CALLBACKS:
 
@@ -50,24 +53,25 @@ export default class Main extends cc.Component {
                return console.error(error);
             }
         })
-        cc.assetManager.loadBundle('map1',(error:Error,buddle)=>{
-            if(error)
-            {
-                console.log(error.message)
-               return console.error(error);
-            }
-            console.log("load map1 ________________")
-            
-        })
 
         cc.assetManager.loadBundle('map2',(error:Error,buddle)=>{
             if(error)
             {
                return console.error(error);
             }
+        })
+
+        cc.assetManager.loadBundle('map1',(error:Error,buddle)=>{
+            if(error)
+            {
+                console.log(error.message)
+               return console.error(error);
+            }
 
             this.loadSlicesMap();
         })
+
+        
 
         
     }
@@ -129,6 +133,11 @@ export default class Main extends cc.Component {
             
         console.log("this.map name: " + this.mapName + ",mapName:" + mapName);
         var pos = mapName == "map1" ? cc.v2(1747,51):cc.v2(60,38)
+        var transportPos = mapName == "map1" ? cc.v2(1342,2494):cc.v2(1747,961)
+
+        //var nodePos = mapName == "map1" ? cc.v2(77,7):cc.v2(2,1)
+        //var transNodePos = mapName == "map1" ? cc.v2(59,95):cc.v2(77,36)
+
         cc.loader.loadRes("map/data/" + mapName,cc.JsonAsset,(error:Error,res:cc.JsonAsset)=>
         {
             var mapData:MapData = res.json;
@@ -141,8 +150,13 @@ export default class Main extends cc.Component {
                 this.mapName = mapName;
                 this.sceneMap.node.active = true;
                 this.sceneMap.init(mapData,tex,MapLoadModel.slices)
-                this.sceneMap.initPlayerPos(pos.x,pos.y);
+                this.sceneMap.initPlayerPos(pos.x,pos.y,(posX,posY)=>{
+                    
+                   if (posX == transportPos.x && transportPos.y == posY)
+                    this.loadSlicesMap();
+                });
                 
+                this.transportNode.setPosition(transportPos)
             });
 
         });

@@ -140,13 +140,14 @@ export default class SceneMap extends cc.Component {
 
     }
 
-    public initPlayerPos(px:number,py:number)
+    public initPlayerPos(px,py,callback)
     {
         this.entityLayer.node.active = true;        
         if(this.player)
         {
             this.player.stop()
-            this.player.setPosition(px,py);
+            var point:Point = MapRoadUtils.instance.getWorldPointByPixel(px,py);
+            this.player.initPosition(px,py,callback);
             this.player.movieClip.loadRes();
         }
     }

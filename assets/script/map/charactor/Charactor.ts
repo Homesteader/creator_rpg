@@ -44,6 +44,8 @@ export default class Charactor extends cc.Component {
 
     private _direction:number = 0;
 
+    private arriveCallBack;
+
     public get direction():number
     {
         return this._direction;
@@ -176,7 +178,7 @@ export default class Charactor extends cc.Component {
                 {
                     this.node.x = nextNode.px;
                     this.node.y = nextNode.py
-
+            
                     this.stop();
                 }else
                 {
@@ -192,7 +194,6 @@ export default class Charactor extends cc.Component {
     public setPlayerStateByNode():void
     {
         var node:RoadNode = this.sceneMap.getMapNodeByPixel(this.node.x,this.node.y);
-        
         if(node == this._currentNode)
         {
             return;
@@ -224,10 +225,11 @@ export default class Charactor extends cc.Component {
 
     }
 
-    public setPosition(px:number,py:number)
+    public initPosition(px:number,py:number,callback)
     {
         this.node.x = px;
         this.node.y = py;
+        this.arriveCallBack = callback
     }
 
     /**
@@ -265,5 +267,9 @@ export default class Charactor extends cc.Component {
     {
         this.moving = false;
         this.state = CharactorState.stand;
+        if(this.arriveCallBack != null)
+        {
+            this.arriveCallBack(this.node.x,this.node.y)
+        }
     }
 }
