@@ -72,11 +72,6 @@ export default class MapParams
     public bgTex:cc.Texture2D = null;
 
     /**
-     * 传送点
-     */
-    public transport:cc.v2 = null;
-
-    /**
      * 出生点
      */
     public birthPlace:cc.v2 = null;
@@ -85,6 +80,11 @@ export default class MapParams
      * 传送点信息
      */
     public transportData:TransportData[] = []
+
+    /**
+     * 英雄大小
+     */
+    public heroScale:number = 1
 
 
 }

@@ -3,4 +3,5 @@ export default class TransportData {
     public targetMap:string = "";
     public image:string = "";
     public scale:number = 0;
+    public targetPos:number[] = [];
 }

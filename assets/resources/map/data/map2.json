@@ -6,16 +6,12 @@
 	"mapHeight": 1080,
 	"nodeWidth": 30,
 	"nodeHeight": 25.98,
-	"transport": [
-		77,
-		36
-	],
+	"heroScale":0.7,
 	"transportData": [{"pos":[77,36],"targetMap": "map1","image": "transport","scale": 0.5}],
 	"birthPlace": [
 		2,
 		1
 	],
-	"targetMap": "map1",
 	"roadDataArr": [
 		[
 			0,
