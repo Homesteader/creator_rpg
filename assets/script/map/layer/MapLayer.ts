@@ -45,7 +45,7 @@ export default class MapLayer extends cc.Component {
 				bgNode.anchorY = 0;
 				this.bgImg = bgNode.addComponent(cc.Sprite);
 			}
-			console.log("this._mapParams.bgTex "+this._mapParams.bgTex)
+			
 			this.bgImg.spriteFrame = new cc.SpriteFrame(this._mapParams.bgTex);
 	
 			//如果是马赛克小地图，则需要把小地图缩放成原始地图一样大小
@@ -57,7 +57,6 @@ export default class MapLayer extends cc.Component {
 
 			this.node.width = this.width;
 			this.node.height = this.height;
-			
 		}
 
 		

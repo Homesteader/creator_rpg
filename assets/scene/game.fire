@@ -180,7 +180,7 @@
       "array": [
         0,
         0,
-        359.4005425705421,
+        407.8979651824706,
         0,
         0,
         0,
@@ -399,8 +399,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 1,
+      "height": 1
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -556,7 +556,7 @@
         "__id__": 14
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 21
@@ -647,15 +647,15 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
+        -7.996,
         0,
         0,
         0,
         0,
         0,
         1,
-        0.5,
-        0.5,
+        1,
+        1,
         1
       ]
     },
@@ -1005,6 +1005,9 @@
     "_enabled": true,
     "layer": {
       "__id__": 6
+    },
+    "transportNode": {
+      "__id__": 12
     },
     "mapLayer": {
       "__id__": 10
@@ -1462,7 +1465,7 @@
       "array": [
         0,
         0,
-        359.4005425705421,
+        407.8979651824706,
         0,
         0,
         0,
@@ -1551,9 +1554,6 @@
     },
     "jumpBtn": {
       "__id__": 29
-    },
-    "transportNode": {
-      "__id__": 12
     },
     "_id": "03Jh6iA4xKZ7vEWuUY6Aju"
   },

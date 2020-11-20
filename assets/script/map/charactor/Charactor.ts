@@ -44,8 +44,6 @@ export default class Charactor extends cc.Component {
 
     private _direction:number = 0;
 
-    private arriveCallBack;
-
     public get direction():number
     {
         return this._direction;
@@ -140,6 +138,7 @@ export default class Charactor extends cc.Component {
         //this.movieClip.stop();
         this.direction = 0;
         this.state = 0;
+        this.node.zIndex = 10
 
     }
 
@@ -180,10 +179,7 @@ export default class Charactor extends cc.Component {
                     this.node.y = nextNode.py
             
                     this.stop();
-                    if(this.arriveCallBack != null)
-                    {
-                        this.arriveCallBack(this.node.x,this.node.y)
-                    }
+                    this.sceneMap.callArriveFunc();
                 }else
                 {
                     this.walk();
@@ -227,13 +223,6 @@ export default class Charactor extends cc.Component {
             
         }
 
-    }
-
-    public initPosition(px:number,py:number,callback)
-    {
-        this.node.x = px;
-        this.node.y = py;
-        this.arriveCallBack = callback
     }
 
     /**

@@ -12,7 +12,7 @@ import AStarRoadSeeker from "./map/road/AStarRoadSeeker";
 import Point from "./map/road/Point";
 import { MapLoadModel } from "./map/base/MapLoadModel";
 import MapParams from "./map/base/MapParams";
-
+import TransportData from "./map/base/TransportData";
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -35,6 +35,9 @@ export default class SceneMap extends cc.Component {
 
     @property(cc.Node)
     public layer: cc.Node = null;
+
+    @property(cc.Node)
+    public transportNode:cc.Node = null;
 
     @property(MapLayer)
     public mapLayer: MapLayer = null;
@@ -61,6 +64,9 @@ export default class SceneMap extends cc.Component {
 
     private _mapParams:MapParams = null;
 
+    private arriveCallBack = null;
+
+    private transportNodes:cc.Node[] = []
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
@@ -74,7 +80,7 @@ export default class SceneMap extends cc.Component {
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
     }
 
-    public init(mapData:MapData,bgTex:cc.Texture2D,mapLoadModel:MapLoadModel = 1)
+    public init(mapData:MapData,bgTex:cc.Texture2D,callback,mapLoadModel:MapLoadModel = 1)
     {
  
         //this._mapData = mapData;
@@ -97,6 +103,10 @@ export default class SceneMap extends cc.Component {
         this._mapParams.sliceHeight = 256;
         this._mapParams.bgTex = bgTex;
         this._mapParams.mapLoadModel = mapLoadModel;
+
+        this._mapParams.transport = cc.v2(mapData.transport[0],mapData.transport[1])
+        this._mapParams.birthPlace = cc.v2(mapData.birthPlace[0],mapData.birthPlace[1])
+        this._mapParams.transportData = mapData.transportData
 
         this.mapLayer.init(this._mapParams);
     
@@ -135,19 +145,90 @@ export default class SceneMap extends cc.Component {
         this.node.width = this.mapLayer.width;
         this.node.height = this.mapLayer.height;
 
+        this.arriveCallBack = callback
+
         this.mapLayer.clear();
+        this.initPlayerPos()
         this.setViewToPlayer();
+        this.setTransport()
+       
+    }
+
+    public setTransport()
+    {
+
+        for(var i = 0; i < this.transportNodes.length; i++)
+        {
+            this.transportNodes[i].active = false
+        }
+
+        for(var i = 0; i < this._mapParams.transportData.length; i++)
+        {
+            var node = this.transportNodes[i]
+            if (node == null)
+            {
+                this.transportNode.active = false
+                node = cc.instantiate(this.transportNode)
+                node.parent = this.transportNode.parent
+                this.transportNodes[i] = node
+            }
+            
+            var data:TransportData = this._mapParams.transportData[i]
+            var point:Point = MapRoadUtils.instance.getPixelByWorldPoint(data.pos[0],data.pos[1])
+            node.setPosition(cc.v2(point.x,point.y))
+            node.setScale(data.scale)
+            node.getComponent("Sprite")
+            var sprite = node.getComponent(cc.Sprite);
+            if(sprite)
+            {             
+                cc.loader.loadRes("ui/" + data.image,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
+                {
+                    sprite.spriteFrame = new cc.SpriteFrame(tex)
+                });
+
+            }
+            node.active = true
+        }
+    }
+
+    public callArriveFunc()
+    {
+        var curPos = this.player.node.getPosition()
+        var point:Point = MapRoadUtils.instance.getWorldPointByPixel(curPos.x,curPos.y);
+        
+        var rangeDis:number = 0
+        var transportName
+        for(var i = 0; i < this._mapParams.transportData.length; i++)
+        {
+            var data:TransportData = this._mapParams.transportData[i]
+            if(data.pos[0] == point.x && data.pos[1] == point.y)
+            {
+                transportName = data.targetMap
+                break
+            }
+        }
+
+        if(transportName != null && this.arriveCallBack != null)
+        {
+            this.arriveCallBack(transportName)
+        }
+    
+    }
+
+    public inTransportRange()
+    {
+        var range:number = 0
 
     }
 
-    public initPlayerPos(px,py,callback)
+    public initPlayerPos()
     {
         this.entityLayer.node.active = true;        
         if(this.player)
         {
             this.player.stop()
-            var point:Point = MapRoadUtils.instance.getWorldPointByPixel(px,py);
-            this.player.initPosition(px,py,callback);
+            var point:Point = MapRoadUtils.instance.getPixelByWorldPoint(this._mapParams.birthPlace.x,this._mapParams.birthPlace.y)
+            this.player.node.setPosition(cc.v2(point.x,point.y))
             this.player.movieClip.loadRes();
         }
     }

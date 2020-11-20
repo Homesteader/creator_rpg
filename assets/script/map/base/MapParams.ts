@@ -1,6 +1,6 @@
 import { MapType } from "./MapType";
 import { MapLoadModel } from "./MapLoadModel";
-
+import { TransportData } from "./TransportData";
 /**
  * 地图参数
  */
@@ -70,6 +70,21 @@ export default class MapParams
      * 地图底图
      */
     public bgTex:cc.Texture2D = null;
+
+    /**
+     * 传送点
+     */
+    public transport:cc.v2 = null;
+
+    /**
+     * 出生点
+     */
+    public birthPlace:cc.v2 = null;
+
+    /**
+     * 传送点信息
+     */
+    public transportData:TransportData[] = []
 
 
 }
