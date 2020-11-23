@@ -80,7 +80,7 @@ export default class SceneMap extends cc.Component {
         this.node.on(cc.Node.EventType.TOUCH_START,this.onMapMouseDown,this);
     }
 
-    public init(mapData:MapData,bgTex:cc.Texture2D,callback,mapLoadModel:MapLoadModel = 1)
+    public init(mapData:MapData,bgTex:cc.Texture2D,targetPos,callback,mapLoadModel:MapLoadModel = 1)
     {
  
         //this._mapData = mapData;
@@ -104,9 +104,9 @@ export default class SceneMap extends cc.Component {
         this._mapParams.bgTex = bgTex;
         this._mapParams.mapLoadModel = mapLoadModel;
 
-        this._mapParams.transport = cc.v2(mapData.transport[0],mapData.transport[1])
-        this._mapParams.birthPlace = cc.v2(mapData.birthPlace[0],mapData.birthPlace[1])
+        this._mapParams.birthPlace = mapData.birthPlace
         this._mapParams.transportData = mapData.transportData
+        this._mapParams.heroScale = mapData.heroScale
 
         this.mapLayer.init(this._mapParams);
     
@@ -144,11 +144,11 @@ export default class SceneMap extends cc.Component {
 
         this.node.width = this.mapLayer.width;
         this.node.height = this.mapLayer.height;
-
+        
         this.arriveCallBack = callback
 
         this.mapLayer.clear();
-        this.initPlayerPos()
+        this.initPlayerPos(targetPos)
         this.setViewToPlayer();
         this.setTransport()
        
@@ -177,19 +177,19 @@ export default class SceneMap extends cc.Component {
             var point:Point = MapRoadUtils.instance.getPixelByWorldPoint(data.pos[0],data.pos[1])
             node.setPosition(cc.v2(point.x,point.y))
             node.setScale(data.scale)
-            node.getComponent("Sprite")
-            var sprite = node.getComponent(cc.Sprite);
-            if(sprite)
-            {             
-                cc.loader.loadRes("ui/" + data.image,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
-                {
-                    sprite.spriteFrame = new cc.SpriteFrame(tex)
-                });
 
-            }
+            //const 需要记录下，开始是var变量，导致下表为3的图片显示为room_trans，而实际上配置表中，只有下标为2的元素才是room_trans，
+            //即：cc.loader.loadRes 中的sprite已经被改变了
+            const sprite = node.getComponent(cc.Sprite);
+            cc.loader.loadRes("ui/" + data.image,cc.Texture2D,(error:Error,tex:cc.Texture2D)=>
+            {
+                sprite.spriteFrame = new cc.SpriteFrame(tex)
+            });
             node.active = true
         }
     }
+
+    public 
 
     public callArriveFunc()
     {
@@ -210,7 +210,7 @@ export default class SceneMap extends cc.Component {
 
         if(transportName != null && this.arriveCallBack != null)
         {
-            this.arriveCallBack(transportName)
+            this.arriveCallBack(transportName,data.targetPos)
         }
     
     }
@@ -221,14 +221,23 @@ export default class SceneMap extends cc.Component {
 
     }
 
-    public initPlayerPos()
+    public initPlayerPos(targetPos:number[])
     {
         this.entityLayer.node.active = true;        
         if(this.player)
         {
             this.player.stop()
-            var point:Point = MapRoadUtils.instance.getPixelByWorldPoint(this._mapParams.birthPlace.x,this._mapParams.birthPlace.y)
+
+            var birthPos:number[] = this._mapParams.birthPlace
+            if(targetPos != null && targetPos.length == 2)
+            {
+                birthPos = targetPos
+            }
+        
+            var point:Point = MapRoadUtils.instance.getPixelByWorldPoint(birthPos[0],birthPos[1])
             this.player.node.setPosition(cc.v2(point.x,point.y))
+
+            this.player.node.scale = this._mapParams.heroScale
             this.player.movieClip.loadRes();
         }
     }

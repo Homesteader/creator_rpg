@@ -54,6 +54,13 @@ export default class Main extends cc.Component {
             }
         })
 
+        cc.assetManager.loadBundle('room_1_1',(error,buddle)=>{
+            if(error)
+            {
+                return console.error(error)
+            }
+        })
+
         cc.assetManager.loadBundle('map2',(error:Error,buddle)=>{
             if(error)
             {
@@ -75,7 +82,7 @@ export default class Main extends cc.Component {
                return console.error(error);
             }
 
-            this.loadSlicesMap("map1");
+            this.loadSlicesMap("map1",null);
         })
 
     }
@@ -106,7 +113,7 @@ export default class Main extends cc.Component {
     /**
      * 加载分切片地图
      */
-    protected loadSlicesMap(mapName)
+    protected loadSlicesMap(mapName,targetPos)
     {   
      
         let bundle = cc.assetManager.getBundle(mapName);
@@ -117,16 +124,16 @@ export default class Main extends cc.Component {
                 {
                    return console.error(error);
                 }
-                this.loadMapRes(mapName,buddle);
+                this.loadMapRes(mapName,buddle,targetPos);
             })
         }
         else
         {
-            this.loadMapRes(mapName,bundle);
+            this.loadMapRes(mapName,bundle,targetPos);
         }
     }
 
-    protected loadMapRes(mapName:string,bundle:cc.AssetManager.Bundle)
+    protected loadMapRes(mapName:string,bundle:cc.AssetManager.Bundle,targetPos:number[])
     {
         console.log("loadMapRes:",mapName)
         if(bundle == null)
@@ -142,8 +149,8 @@ export default class Main extends cc.Component {
                     return console.error(error);
                 console.log("load map success:",mapName,mapData.name);
                 this.sceneMap.node.active = true;
-                this.sceneMap.init(mapData,tex,(targetMapName)=>{
-                    this.jumpMap(targetMapName);
+                this.sceneMap.init(mapData,tex,targetPos,(targetMapName,targetPos)=>{
+                    this.jumpMap(targetMapName,targetPos);
                 },MapLoadModel.slices)
                 this.playVideo()
             });
@@ -153,8 +160,8 @@ export default class Main extends cc.Component {
        
     }
 
-    jumpMap(mapName:string){
-        this.loadSlicesMap(mapName);
+    jumpMap(mapName:string,targetPos){
+        this.loadSlicesMap(mapName,targetPos);
     }
 
     playVideo(){

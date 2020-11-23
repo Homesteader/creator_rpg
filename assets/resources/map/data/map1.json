@@ -6,19 +6,49 @@
 	"mapHeight": 2520,
 	"nodeWidth": 30,
 	"nodeHeight": 25.98,
-	"transport": [
-		59,
-		95
+	"heroScale": 0.7,
+	"transportData": [
+		{
+			"pos": [
+				59,
+				95
+			],
+			"targetMap": "map2",
+			"image": "transport",
+			"scale": 0.5
+		},
+		{
+			"pos": [
+				44,
+				33
+			],
+			"targetMap": "map2",
+			"image": "transport",
+			"scale": 0.3
+		},
+		{
+			"pos": [
+				9,
+				18
+			],
+			"targetMap": "room_1_1",
+			"image": "room_trans",
+			"scale": 0.8
+		},
+		{
+			"pos": [
+				68,
+				85
+			],
+			"targetMap": "map2",
+			"image": "transport",
+			"scale": 0.3
+		}
 	],
-	"transportData": [{"pos":[59,95],"targetMap": "map2","image": "transport","scale": 0.5},
-	{"pos":[44,33],"targetMap": "map2","image": "transport","scale": 0.3},
-	{"pos":[9,18],"targetMap": "map2","image": "transport","scale": 0.3},
-	{"pos":[68,85],"targetMap": "map2","image": "transport","scale": 0.3}],
 	"birthPlace": [
 		76,
 		1
 	],
-	"targetMap": "map2",
 	"roadDataArr": [
 		[
 			1,

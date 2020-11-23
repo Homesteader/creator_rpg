@@ -62,7 +62,6 @@ export default class Charactor extends cc.Component {
             this.movieClip.rowIndex = value;
             this.movieClip.node.scaleX = 1;
         }
-        console.log("rowIndex: "+this.movieClip.rowIndex + " ,"+value)
     }
 
     private _state:CharactorState = 0;
@@ -75,7 +74,6 @@ export default class Charactor extends cc.Component {
     public set state(value:CharactorState)
     {
         this._state = value;
-        console.log("state: "+value)
         // 每行的列数
         switch(this._state)
         {
@@ -160,7 +158,6 @@ export default class Charactor extends cc.Component {
 
                     var dire:number = Math.round((-this._moveAngle + Math.PI)/(Math.PI / 4));
                     this.direction = dire > 5 ? dire-6 : dire+2;
-                    console.log("dire: "+dire+" , "+this.direction)
                 }
 
                 var xspeed:number = Math.cos(this._moveAngle) * speed;
