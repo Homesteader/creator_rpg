@@ -54,6 +54,9 @@ export default class SceneMap extends cc.Component {
     @property()
     public isFollowPlayer:boolean = true;
 
+    @property(cc.VideoPlayer)
+    videoplayerMp4: cc.VideoPlayer = null
+    
     private _roadDic:{[key:string]:RoadNode} = {};
 
     private _roadSeeker:IRoadSeeker;
@@ -67,12 +70,17 @@ export default class SceneMap extends cc.Component {
     private arriveCallBack = null;
 
     private transportNodes:cc.Node[] = []
+
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+     onLoad () {
+        this.videoplayerMp4.node.on('completed', this.playCompleted, this);
+        this.videoplayerMp4.node.on('ready-to-play', this.loadCompleted, this);
+     }
 
     start () {
 
+        this.videoplayerMp4.node.setContentSize(cc.size(1,1))
         this.node.x = -cc.winSize.width / 2;
         this.node.y = -cc.winSize.height / 2;
 
@@ -151,7 +159,28 @@ export default class SceneMap extends cc.Component {
         this.initPlayerPos(targetPos)
         this.setViewToPlayer();
         this.setTransport()
+        this.playVide()
        
+    }
+
+    playVide()
+    {
+        if(this._mapParams.name != "room_1_1" || this.player == null)
+            return;
+        if(!this.videoplayerMp4.isPlaying())
+        {
+            this.videoplayerMp4.node.setContentSize(cc.size(200,200))
+            this.player.stop()
+            this.videoplayerMp4.play()
+        }
+    }
+
+    playCompleted()
+    {
+        this.videoplayerMp4.node.setContentSize(cc.size(1,1))
+    }
+    loadCompleted()
+    {
     }
 
     public setTransport()
@@ -263,7 +292,10 @@ export default class SceneMap extends cc.Component {
 
     public onMapMouseDown(event:cc.Event.EventTouch):void
     {
-       
+       if(this.videoplayerMp4.isPlaying())
+       {
+           return;
+       }
         //var pos = this.node.convertToNodeSpaceAR(event.getLocation());
         var pos = this.camera.node.position.add(event.getLocation());
 
@@ -378,7 +410,6 @@ export default class SceneMap extends cc.Component {
     {
         this.setViewToPoint(this.player.node.x,this.player.node.y);
     }
-
 
     update (dt) 
     {

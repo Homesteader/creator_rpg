@@ -23,13 +23,12 @@ export default class Main extends cc.Component {
     @property(cc.Button)
     jumpBtn : cc.Button = null;
 
-    @property(cc.VideoPlayer)
-    videoPlay : cc.VideoPlayer = null;
-
     private curMapData:MapData = null
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    //  onLoad () {
+        
+    //  }
 
     start () {
 
@@ -38,8 +37,7 @@ export default class Main extends cc.Component {
         this.sceneMap.node.active = false;
 
         this.loadBundle();
-        
-        this.jumpBtn.node.on(cc.Node.EventType.TOUCH_END,this.jumpMap,this)
+    
     }
 
     /**
@@ -62,13 +60,6 @@ export default class Main extends cc.Component {
         })
 
         cc.assetManager.loadBundle('map2',(error:Error,buddle)=>{
-            if(error)
-            {
-               return console.error(error);
-            }
-        })
-
-        cc.assetManager.loadBundle('video',(error:Error,buddle)=>{
             if(error)
             {
                return console.error(error);
@@ -151,8 +142,7 @@ export default class Main extends cc.Component {
                 this.sceneMap.node.active = true;
                 this.sceneMap.init(mapData,tex,targetPos,(targetMapName,targetPos)=>{
                     this.jumpMap(targetMapName,targetPos);
-                },MapLoadModel.slices)
-                this.playVideo()
+                },MapLoadModel.slices)                
             });
 
         });
@@ -164,33 +154,5 @@ export default class Main extends cc.Component {
         this.loadSlicesMap(mapName,targetPos);
     }
 
-    playVideo(){
-
-        let bundle = cc.assetManager.getBundle("video");
-        if(bundle == null)
-        {
-            return;
-        }
-        bundle.load("video",(error:Error,clip:cc.Asset)=>
-            {
-                if(error)
-                {
-                    console.log("0000000000000",error.message)
-                    return console.error(error);
-                }
-                console.log("22222222222222222222")
-                this.videoPlay.clip = clip.toString();
-                this.videoPlay.node.on('ready-to-play', this.callback, this);
-            });
-    }
-
-    callback(event)
-    {
-        var videoplayer = event.detail;
-        console.log("111111111111111111111111111111")
-        if(!this.videoPlay.isPlaying)
-                 this.videoPlay.play()
-
-    }
     // update (dt) {}
 }
