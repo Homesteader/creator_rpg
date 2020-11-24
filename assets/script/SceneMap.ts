@@ -57,6 +57,15 @@ export default class SceneMap extends cc.Component {
     @property(cc.VideoPlayer)
     videoplayerMp4: cc.VideoPlayer = null
     
+    @property(cc.Sprite)
+    videoBg : cc.Sprite = null
+
+    @property(cc.Button)
+    videoPlayBtn : cc.Button = null
+
+    @property(cc.Label)
+    videoBtnTx : cc.Label = null
+
     private _roadDic:{[key:string]:RoadNode} = {};
 
     private _roadSeeker:IRoadSeeker;
@@ -76,11 +85,18 @@ export default class SceneMap extends cc.Component {
      onLoad () {
         this.videoplayerMp4.node.on('completed', this.playCompleted, this);
         this.videoplayerMp4.node.on('ready-to-play', this.loadCompleted, this);
+
+        this.videoplayerMp4.node.on('playing', this.updateVideoState, this);
+        this.videoplayerMp4.node.on('paused', this.updateVideoState, this);
+        this.videoplayerMp4.node.on('stopped', this.updateVideoStateStop, this);
+
+        this.videoPlayBtn.node.on(cc.Node.EventType.TOUCH_END,this.videoPlay,this)
      }
 
     start () {
-
-        this.videoplayerMp4.node.setContentSize(cc.size(1,1))
+        this.videoPlayBtn.node.active = true
+        this.videoBg.node.active = false
+        this.videoplayerMp4.node.setContentSize(cc.size(440,250))
         this.node.x = -cc.winSize.width / 2;
         this.node.y = -cc.winSize.height / 2;
 
@@ -159,28 +175,46 @@ export default class SceneMap extends cc.Component {
         this.initPlayerPos(targetPos)
         this.setViewToPlayer();
         this.setTransport()
-        this.playVide()
-       
-    }
-
-    playVide()
-    {
-        if(this._mapParams.name != "room_1_1" || this.player == null)
-            return;
-        if(!this.videoplayerMp4.isPlaying())
-        {
-            this.videoplayerMp4.node.setContentSize(cc.size(200,200))
-            this.player.stop()
-            this.videoplayerMp4.play()
-        }
+        this.videoBg.node.active = this._mapParams.name == "room_1_1"
     }
 
     playCompleted()
     {
-        this.videoplayerMp4.node.setContentSize(cc.size(1,1))
+        this.videoplayerMp4.currentTime = 0
+        this.videoBtnTx.string = "播放"
     }
+
     loadCompleted()
     {
+        this.videoPlayBtn.node.active = true
+    }
+
+    videoPlay()
+    {
+        if(this.videoplayerMp4.isPlaying())
+        {
+            this.videoplayerMp4.pause()
+        }
+        else
+        {
+            this.videoplayerMp4.play()
+            if(this.player)
+            {
+                this.player.stop()
+            }
+        }
+        
+    }
+
+    updateVideoState()
+    {
+        var str = this.videoplayerMp4.isPlaying() ? "暂停":"播放";
+        this.videoBtnTx.string = str
+    }
+
+    updateVideoStateStop()
+    {
+        this.videoBtnTx.string = "播放"
     }
 
     public setTransport()
